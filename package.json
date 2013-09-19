@@ -16,7 +16,8 @@
     },
     "dependencies": {
         "grunt": "0.4.x",
-        "gm": "1.11.x"
+        "gm": "1.11.x",
+        "phantomizer-libutil": "maboiteaspam/phantomizer-libutil"
     },
     "devDependencies": {
     }
