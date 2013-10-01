@@ -33,6 +33,8 @@ module.exports = function(grunt) {
 
         var current_grunt_task = this.nameArgs;
         var current_grunt_opt = this.options();
+        var user_config = grunt.config();
+
         var g_queue = queue_async()
         var pos_map = {}
 
@@ -116,6 +118,9 @@ module.exports = function(grunt) {
 
                             if ( grunt.file.exists( process.cwd()+"/Gruntfile.js") ) {
                                 deps.push(process.cwd()+"/Gruntfile.js")
+                            }
+                            if ( grunt.file.exists(user_config.project_dir+"/../config.json")) {
+                                deps.push( user_config.project_dir+"/../config.json")
                             }
                             deps.push(__filename);
                             var entry = meta_manager.create(deps);
