@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     var src_file = src_files[n];
                     var tgt_pos = src_file.match(/^(left-to-right:)/)==null?"top-to-bottom":"left-to-right";
                     src_file = src_file.replace(tgt_pos+":","");
-                    var a_src_file = file_utils.find_file(paths, src_file);
+                    var a_src_file = "/"+file_utils.find_file(paths, src_file);
                     pos_map[a_tgt_file][a_src_file] = {
                         tgt_pos:tgt_pos
                         ,width:0
