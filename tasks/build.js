@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     var src_file = src_files[n];
                     var tgt_pos = src_file.match(/^(left-to-right:)/)==null?"top-to-bottom":"left-to-right";
                     src_file = src_file.replace(tgt_pos+":","");
-                    var a_src_file = "/"+file_utils.find_file(paths, src_file);
+                    var a_src_file = file_utils.find_file(paths, src_file);
                     pos_map[a_tgt_file][a_src_file] = {
                         tgt_pos:tgt_pos
                         ,width:0
@@ -145,57 +145,56 @@ module.exports = function(grunt) {
 
 
 
-    grunt.registerMultiTask("phantomizer-dir-gm-merge", "Merge many pictures within a unique file", function () {
-        var ph_libutil = require("phantomizer-libutil");
-        var file_utils = ph_libutil.file_utils;
-        var meta_factory = ph_libutil.meta;
-
-        var wd = process.cwd()
-
-        var options = this.options();
-        var in_files = options.in_files;
-        var meta_dir = options.meta_dir;
-        var anti_alias = options.anti_alias || true;
-
-
-        var meta_manager = new meta_factory( wd, meta_dir);
-        gm = gm.subClass({ imageMagick: true });
-
-        var gm_forge = function(anti_alias){
-            return function(src){
-                return gm(src).antialias(anti_alias);
-            }
-        }(anti_alias);
-
-        var current_grunt_task = this.nameArgs;
-        var current_grunt_opt = this.options();
-
-        var g_queue = queue_async()
-
-        for( var tgt_file in in_files ){
-
-            var meta_file = tgt_file+".meta";
-
-            // check if a cache entry exists, if it is fresh, just serve it
-            if( meta_manager.is_fresh(meta_file) == false ){
-                var src_files = in_files[ tgt_file ];
-                merge_file(gm_forge, tgt_file, src_files, meta_manager, current_grunt_task, current_grunt_opt, function(){
-
-                })
-            }else{
-                grunt.log.ok("the build is fresh\n\t" + meta_file)
-            }
-        }
-
-
-        var done = this.async()
-        g_queue.then(function(){
-            grunt.log.ok("Done")
-            done()
-        })
-    });
-
     /*
+
+     grunt.registerMultiTask("phantomizer-dir-gm-merge", "Merge many pictures within a unique file", function () {
+     var ph_libutil = require("phantomizer-libutil");
+     var meta_factory = ph_libutil.meta;
+
+     var wd = process.cwd()
+
+     var options = this.options();
+     var in_files = options.in_files;
+     var meta_dir = options.meta_dir;
+     var anti_alias = options.anti_alias || true;
+
+
+     var meta_manager = new meta_factory( wd, meta_dir);
+     gm = gm.subClass({ imageMagick: true });
+
+     var gm_forge = function(anti_alias){
+     return function(src){
+     return gm(src).antialias(anti_alias);
+     }
+     }(anti_alias);
+
+     var current_grunt_task = this.nameArgs;
+     var current_grunt_opt = this.options();
+
+     var g_queue = queue_async()
+
+     for( var tgt_file in in_files ){
+
+     var meta_file = tgt_file+".meta";
+
+     // check if a cache entry exists, if it is fresh, just serve it
+     if( meta_manager.is_fresh(meta_file) == false ){
+     var src_files = in_files[ tgt_file ];
+     merge_file(gm_forge, tgt_file, src_files, meta_manager, current_grunt_task, current_grunt_opt, function(){
+
+     })
+     }else{
+     grunt.log.ok("the build is fresh\n\t" + meta_file)
+     }
+     }
+
+
+     var done = this.async()
+     g_queue.then(function(){
+     grunt.log.ok("Done")
+     done()
+     })
+     });
 
      function merge_file(gm_forge, tgt_file, src_files, meta_manager, current_grunt_task, current_grunt_opt, then){
      var a_tgt_file = out_dir+tgt_file;
