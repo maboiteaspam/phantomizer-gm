@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "grunt": "0.4.x",
-        "gm": "1.11.x",
+        "gm": "1.x.x",
         "phantomizer-libutil": "git://github.com/maboiteaspam/phantomizer-libutil.git"
     },
     "devDependencies": {}
