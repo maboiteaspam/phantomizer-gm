@@ -13,12 +13,18 @@ module.exports = function(grunt) {
 
         var wd = process.cwd()
 
-        var options = this.options();
-        var in_files = options.in_files;
-        var out_dir = options.out_dir;
-        var paths = options.paths;
-        var meta_dir = options.meta_dir;
-        var anti_alias = options.anti_alias || true;
+        var options = this.options({
+            in_files:{},
+            meta_dir:"",
+            out_dir:"",
+            anti_alias:true,
+            paths:[]
+        });
+        var in_files    = options.in_files;
+        var out_dir     = options.out_dir;
+        var paths       = options.paths;
+        var meta_dir    = options.meta_dir;
+        var anti_alias  = options.anti_alias;
 
 
         var meta_manager = new meta_factory( wd, meta_dir);
@@ -39,7 +45,7 @@ module.exports = function(grunt) {
 
         for( var tgt_file in in_files ){
 
-            var meta_file = tgt_file+".meta";
+            var meta_file = tgt_file+"";
 
             // check if a cache entry exists, if it is fresh, just serve it
             if( meta_manager.is_fresh(meta_file) == false ){
