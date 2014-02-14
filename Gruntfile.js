@@ -1,12 +1,12 @@
 
 module.exports = function(grunt) {
 
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json')
-    });
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json')
+  });
 
-    grunt.registerTask('default',
-        [
-            'phantomizer-gm-merge:test'
-        ]);
+  grunt.registerTask('default',
+    [
+      'phantomizer-gm-merge:test'
+    ]);
 };
