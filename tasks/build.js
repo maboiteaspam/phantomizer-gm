@@ -22,7 +22,8 @@ module.exports = function(grunt) {
 
 
 // get phantomizer main instance
-    var phantomizer = ph_libutil.get("main");
+    var Phantomizer = ph_libutil.Phantomizer;
+    var phantomizer = new Phantomizer(process.cwd(),grunt);
     var meta_manager = phantomizer.get_meta_manager();
 
     var gm = require('gm').subClass({ imageMagick: true });
