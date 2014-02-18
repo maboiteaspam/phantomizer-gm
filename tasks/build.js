@@ -36,7 +36,6 @@ module.exports = function(grunt) {
 
     var current_grunt_task = this.nameArgs;
     var current_grunt_opt = this.options();
-    var user_config = grunt.config();
 
     var g_queue = queue_async()
     var pos_map = {}
@@ -118,8 +117,6 @@ module.exports = function(grunt) {
                 cur_h += pos_map[a_tgt_file][a_src_file].height
               }
 
-              entry.add_dependency( process.cwd()+"/Gruntfile.js");
-              entry.add_dependency( user_config.project_dir+"/../config.json");
               entry.require_task(current_grunt_task, current_grunt_opt);
               entry.extras["map"] = pos_map[a_tgt_file];
               entry.save(meta_file);
